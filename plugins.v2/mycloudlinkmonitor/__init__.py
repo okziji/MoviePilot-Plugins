@@ -57,13 +57,13 @@ class FileMonitorHandler(FileSystemEventHandler):
 
 class MyCloudLinkMonitor(_PluginBase):
     # 插件名称
-    plugin_name = "目录实时监控"
+    plugin_name = "目录监控"
     # 插件描述
     plugin_desc = "监控目录文件变化，自动转移媒体文件。"
     # 插件图标
-    plugin_icon = "Linkease_A.png"
+    plugin_icon = "Vscode_A.png"
     # 插件版本
-    plugin_version = "2.5.8"
+    plugin_version = "2.5.9"
     # 插件作者
     plugin_author = "okziji"
     # 作者主页
@@ -427,10 +427,6 @@ class MyCloudLinkMonitor(_PluginBase):
                         mediainfo.title = transfer_history.title
                 logger.info(f"{file_path.name} 识别为：{mediainfo.type.value} {mediainfo.title_year}")
 
-                logger.info(f"=====>{mediainfo.type.value} ")
-                logger.info(f"=====>{mediainfo.title_year} ")
-                
-
                 # 获取集数据
                 if mediainfo.type == MediaType.TV:
                     episodes_info = self.tmdbchain.tmdb_episodes(tmdbid=mediainfo.tmdb_id,
@@ -440,8 +436,6 @@ class MyCloudLinkMonitor(_PluginBase):
 
                 # 查询转移目的目录
                 target_dir = DirectoryHelper().get_dir(mediainfo, src_path=Path(mon_path))
-
-                logger.info(repr(target_dir))
 
                 if not target_dir or not target_dir.library_path:
                     target_dir = TransferDirectoryConf()
@@ -461,9 +455,10 @@ class MyCloudLinkMonitor(_PluginBase):
                     logger.error(f"未配置监控目录 {mon_path} 的目的目录")
                     return
 
-                logger.info(repr(target_dir))
-
-                logger.info(repr(mediainfo))
+                # 添加一级目录
+                logger.info(f"=====>{repr(target_dir)}")
+                target_dir.library_path = f"{target_dir.library_path}/{mediainfo.type.value}"
+                logger.info(f"=====>{repr(target_dir)}")
 
                 # 转移文件
                 transferinfo: TransferInfo = self.chain.transfer(fileitem=file_item,
