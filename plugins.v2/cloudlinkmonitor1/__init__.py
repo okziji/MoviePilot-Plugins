@@ -55,21 +55,21 @@ class FileMonitorHandler(FileSystemEventHandler):
                                 mon_path=self._watch_path, event_path=event.dest_path)
 
 
-class CloudLinkMonitor(_PluginBase):
+class MyCloudLinkMonitor(_PluginBase):
     # 插件名称
-    plugin_name = "目录实时监控1"
+    plugin_name = "目录实时监控"
     # 插件描述
     plugin_desc = "监控目录文件变化，自动转移媒体文件。"
     # 插件图标
     plugin_icon = "Linkease_A.png"
     # 插件版本
-    plugin_version = "2.5.7"
+    plugin_version = "2.5.8"
     # 插件作者
     plugin_author = "okziji"
     # 作者主页
-    author_url = "https://github.com/thsrite"
+    author_url = "https://github.com/okziji"
     # 插件配置项ID前缀
-    plugin_config_prefix = "cloudlinkmonitor1_"
+    plugin_config_prefix = "mycloudlinkmonitor_"
     # 加载顺序
     plugin_order = 4
     # 可使用的用户级别
@@ -714,7 +714,7 @@ class CloudLinkMonitor(_PluginBase):
         """
         if self._enabled and self._cron:
             return [{
-                "id": "CloudLinkMonitor",
+                "id": "MyCloudLinkMonitor",
                 "name": "云盘实时监控全量同步服务",
                 "trigger": CronTrigger.from_crontab(self._cron),
                 "func": self.sync_all,
