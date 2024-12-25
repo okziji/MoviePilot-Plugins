@@ -456,9 +456,7 @@ class MyCloudLinkMonitor(_PluginBase):
                     return
 
                 # 添加一级目录
-                logger.info(f"=====>{repr(target_dir)}")
                 target_dir.library_path = f"{target_dir.library_path}/{mediainfo.type.value}"
-                logger.info(f"=====>{repr(target_dir)}")
 
                 # 转移文件
                 transferinfo: TransferInfo = self.chain.transfer(fileitem=file_item,
